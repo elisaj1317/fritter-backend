@@ -313,3 +313,189 @@ This renders the `index.html` file that will be used to interact with the backen
 **Throws**
 
 - `403` if the user is not logged in
+
+#### `GET /api/follow?following=USERNAME` - Get followings of a user
+
+**Returns**
+
+- An array of users who `following` follows
+
+**Throws**
+
+- `400` if `following` is not given
+- `404` if `following` is not a recognized username of any user
+
+#### `GET /api/follow?follower=USERNAME` - Get followers of a user
+
+**Returns**
+
+- An array of users who follow `follower`
+
+**Throws**
+
+- `400` if `follower` is not given or vaild
+- `404` if `follower` is not a recognized username of any user
+
+#### `GET /api/follow/freet` - Get freets of the current user's followings
+
+**Returns**
+
+- An array of freets who logged in user follows
+
+**Throws**
+
+- `403` if the user is not logged in
+
+#### `POST /api/follow` - Follow a user
+
+**Body**
+
+- `username` _{string}_ - The username of the user to follow
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `403` if the user is not logged in
+- `404` if `username` is not a recognized username of any user
+
+#### `DELETE /api/follow/:username?` - Delete an existing follow
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `403` if the user is not logged in
+- `404` if `username` is not a recognized username of any user
+
+#### `GET /api/comment?freet=FREETID` - Get all comments associated with a freet
+
+**Returns**
+
+- An array of comments on freet with id `freet`
+
+**Throws**
+
+- `400` if `freet` is not given
+- `404` if `freet` is invalid or is not a recognized id of any freet
+
+#### `GET /api/comment?freet=FREETID&category=CATEGORY` - Get comments of a specific category associated with a freet
+
+**Returns**
+
+- An array of comments on freet with id `freet` and category `category`
+
+**Throws**
+
+- `400` if `freet` is not given
+- `404` if `freet` is invalid or is not a recognized freetId of any freet or if `category` is not a recognized category
+
+#### `POST /api/comment` - Create a new comment
+
+**Body**
+
+- `freetId` _{objectId}_ - The freetId of freet where comment is being added
+- `content` _{string}_ - The content of the comment
+- `category` _{string}_ - The category of the comment
+
+**Returns**
+
+- A success message
+- A object with the created comment
+
+**Throws**
+
+- `403` if the user is not logged in
+- `400` If the comment `content` is empty or a stream of empty spaces or if the `category` is invalid
+- `413` If the comment content is more than 140 characters long
+- `404` if `freetId` or is invalid or is not a recognized freetId of any freet
+
+#### `DELETE /api/comment/:commentId?` - Delete an existing comment
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `403` if the user is not logged in
+- `403` if the user is not the author of the comment
+- `404` if the commentId is invalid
+
+#### `PUT /api/comment/:commentId?` - Update an existing comment
+
+**Body** _(no need to add fields that are not being changed)_
+
+- `content` _{string}_ - The new content of the comment
+- `category` _{string}_ - The new category of the comment
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `403` if the user is not logged in
+- `404` if the `commentId` is invalid
+- `403` if the user is not the author of the comment
+- `400` if the new comment content is empty or a stream of empty spaces
+- `413` if the new comment content is more than 140 characters long
+
+#### `GET /api/menu` - Get custom menu bar for authenticated user
+
+**Returns**
+
+- An array of menu items for the authenticated user
+
+**Throws**
+
+- `403` if the user is not logged in
+
+#### `POST /api/menu` - Add item to menu bar
+
+**Body**
+
+- `pageUrl` _{string}_ - The url for the page added to the menu bar
+
+**Returns**
+
+- A success message
+- A object with the created menu item
+
+**Throws**
+
+- `403` if the user is not logged in
+
+#### `DELETE /api/menu/:menuId?` - Delete an existing menu item
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `403` if the user is not logged in
+- `403` if the user is not the owner of the menu item
+- `404` if the `menuId` is invalid
+
+#### `PUT /api/menu/:menuId?` - Update an existing menu item's location
+
+**Body**
+
+- `location` _{integer}_ - The new location for the menu item
+
+**Returns**
+
+- A success message
+- An updated array of menu items for the authenticated user
+
+**Throws**
+
+- `403` if the user is not logged in
+- `404` if the `menuId` is invalid
+- `403` if the user is not the owner of the menu item
+- `400` if the `location` is invalid
