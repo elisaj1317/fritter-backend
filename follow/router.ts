@@ -4,7 +4,6 @@ import FollowCollection from './collection';
 import * as userValidator from '../user/middleware';
 import * as followValidator from '../follow/middleware';
 import * as util from './util';
-import FreetCollection from '../freet/collection';
 
 const router = express.Router();
 
