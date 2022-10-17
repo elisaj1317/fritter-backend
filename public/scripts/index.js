@@ -41,7 +41,6 @@ const formsAndHandlers = {
   'delete-freet': deleteFreet,
   'view-followings': viewFollowings,
   'view-followers': viewFollowers,
-  'view-follower-freets': getFreetsOfCurrentFollowing,
   'add-follow': createFollow,
   'delete-follow': deleteFollow,
 };
