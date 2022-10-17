@@ -314,37 +314,27 @@ This renders the `index.html` file that will be used to interact with the backen
 
 - `403` if the user is not logged in
 
-#### `GET /api/follow?following=USERNAME` - Get followings of a user
+#### `GET /api/follow/following?username=USERNAME` - Get followings of a user
 
 **Returns**
 
-- An array of users who `following` follows
+- An array of users who `username` follows
 
 **Throws**
 
-- `400` if `following` is not given
-- `404` if `following` is not a recognized username of any user
+- `400` if `username` is not given or valid
+- `404` if `username` is not a recognized username of any user
 
-#### `GET /api/follow?follower=USERNAME` - Get followers of a user
+#### `GET /api/follow/follower?username=USERNAME` - Get followers of a user
 
 **Returns**
 
-- An array of users who follow `follower`
+- An array of users who follow `username`
 
 **Throws**
 
-- `400` if `follower` is not given or vaild
-- `404` if `follower` is not a recognized username of any user
-
-#### `GET /api/follow/freet` - Get freets of the current user's followings
-
-**Returns**
-
-- An array of freets who logged in user follows
-
-**Throws**
-
-- `403` if the user is not logged in
+- `400` if `username` is not given or vaild
+- `404` if `username` is not a recognized username of any user
 
 #### `POST /api/follow` - Follow a user
 
@@ -358,6 +348,8 @@ This renders the `index.html` file that will be used to interact with the backen
 
 **Throws**
 
+- `400` if the user tries to follow themselves
+- `409` if the user tries to follow someone they already follow
 - `403` if the user is not logged in
 - `404` if `username` is not a recognized username of any user
 
