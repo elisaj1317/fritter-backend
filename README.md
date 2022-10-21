@@ -314,7 +314,7 @@ This renders the `index.html` file that will be used to interact with the backen
 
 - `403` if the user is not logged in
 
-#### `GET /api/follow/following?username=USERNAME` - Get followings of a user
+#### `GET /api/follows/following?username=USERNAME` - Get followings of a user
 
 **Returns**
 
@@ -325,7 +325,7 @@ This renders the `index.html` file that will be used to interact with the backen
 - `400` if `username` is not given or valid
 - `404` if `username` is not a recognized username of any user
 
-#### `GET /api/follow/follower?username=USERNAME` - Get followers of a user
+#### `GET /api/follows/follower?username=USERNAME` - Get followers of a user
 
 **Returns**
 
@@ -336,7 +336,17 @@ This renders the `index.html` file that will be used to interact with the backen
 - `400` if `username` is not given or vaild
 - `404` if `username` is not a recognized username of any user
 
-#### `POST /api/follow` - Follow a user
+#### `GET /api/follows/freet` - Get freets of the current user's followings
+
+**Returns**
+
+- An array of freets who current user follows in descending order by date modified
+
+**Throws**
+
+- `403` if user not logged in
+
+#### `POST /api/follows` - Follow a user
 
 **Body**
 
@@ -353,7 +363,7 @@ This renders the `index.html` file that will be used to interact with the backen
 - `403` if the user is not logged in
 - `404` if `username` is not a recognized username of any user
 
-#### `DELETE /api/follow/:username?` - Delete an existing follow
+#### `DELETE /api/follows/:username?` - Delete an existing follow
 
 **Returns**
 
@@ -364,7 +374,46 @@ This renders the `index.html` file that will be used to interact with the backen
 - `403` if the user is not logged in
 - `404` if `username` is not a recognized username of any user
 
-#### `GET /api/comment?freet=FREETID` - Get all comments associated with a freet
+#### `GET /api/likes/freet?username=USERNAME` - Get a user's liked freets
+
+**Returns**
+
+- An array of freets which `username` has liked
+
+**Throws**
+
+- `400` if `username` is not given or valid
+- `404` if `username` is not a recognized username of any user
+
+#### `POST /api/likes/` - Get a user's liked freets
+
+**Body**
+- `freetId` {string} - The id of freet liked
+
+**Returns**
+
+- A success message
+- An object with like details
+
+**Throws**
+
+- `403` if the user is not logged in
+- `409` if the user attempts to like a post they've liked before
+- `404` if `freetId` is not a recognized freetId of any freet
+
+#### `DELETE /api/likes/:freetId?` - Delete an existing like
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `403` if the user is not logged in
+- `404` if `freetId` is not a recognized freetId of any freet
+  
+
+#### `GET /api/comments?freet=FREETID` - Get all comments associated with a freet
 
 **Returns**
 
@@ -375,7 +424,7 @@ This renders the `index.html` file that will be used to interact with the backen
 - `400` if `freet` is not given
 - `404` if `freet` is invalid or is not a recognized id of any freet
 
-#### `GET /api/comment?freet=FREETID&category=CATEGORY` - Get comments of a specific category associated with a freet
+#### `GET /api/comments?freet=FREETID&category=CATEGORY` - Get comments of a specific category associated with a freet
 
 **Returns**
 
@@ -386,7 +435,7 @@ This renders the `index.html` file that will be used to interact with the backen
 - `400` if `freet` is not given
 - `404` if `freet` is invalid or is not a recognized freetId of any freet or if `category` is not a recognized category
 
-#### `POST /api/comment` - Create a new comment
+#### `POST /api/comments` - Create a new comment
 
 **Body**
 
@@ -406,7 +455,7 @@ This renders the `index.html` file that will be used to interact with the backen
 - `413` If the comment content is more than 140 characters long
 - `404` if `freetId` or is invalid or is not a recognized freetId of any freet
 
-#### `DELETE /api/comment/:commentId?` - Delete an existing comment
+#### `DELETE /api/comments/:commentId?` - Delete an existing comment
 
 **Returns**
 
@@ -418,7 +467,7 @@ This renders the `index.html` file that will be used to interact with the backen
 - `403` if the user is not the author of the comment
 - `404` if the commentId is invalid
 
-#### `PUT /api/comment/:commentId?` - Update an existing comment
+#### `PUT /api/comments/:commentId?` - Update an existing comment
 
 **Body** _(no need to add fields that are not being changed)_
 
@@ -437,7 +486,7 @@ This renders the `index.html` file that will be used to interact with the backen
 - `400` if the new comment content is empty or a stream of empty spaces
 - `413` if the new comment content is more than 140 characters long
 
-#### `GET /api/menu` - Get custom menu bar for authenticated user
+#### `GET /api/menus` - Get custom menu bar for authenticated user
 
 **Returns**
 
@@ -447,7 +496,7 @@ This renders the `index.html` file that will be used to interact with the backen
 
 - `403` if the user is not logged in
 
-#### `POST /api/menu` - Add item to menu bar
+#### `POST /api/menus` - Add item to menu bar
 
 **Body**
 
@@ -462,7 +511,7 @@ This renders the `index.html` file that will be used to interact with the backen
 
 - `403` if the user is not logged in
 
-#### `DELETE /api/menu/:menuId?` - Delete an existing menu item
+#### `DELETE /api/menus/:menuId?` - Delete an existing menu item
 
 **Returns**
 
@@ -474,7 +523,7 @@ This renders the `index.html` file that will be used to interact with the backen
 - `403` if the user is not the owner of the menu item
 - `404` if the `menuId` is invalid
 
-#### `PUT /api/menu/:menuId?` - Update an existing menu item's location
+#### `PUT /api/menus/:menuId?` - Update an existing menu item's location
 
 **Body**
 

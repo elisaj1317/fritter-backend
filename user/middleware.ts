@@ -156,7 +156,7 @@ const isAuthorExists = async (req: Request, res: Response, next: NextFunction) =
 /**
  * Checks if a user with username in req.body exists
  */
- const isUserBodyExists = async (req: Request, res: Response, next: NextFunction) => {
+const isUserBodyExists = async (req: Request, res: Response, next: NextFunction) => {
   const user = await UserCollection.findOneByUsername(req.body.username);
 
   if (user) {
@@ -174,7 +174,7 @@ const isAuthorExists = async (req: Request, res: Response, next: NextFunction) =
 /**
  * Checks if a user with username in req.params exists
  */
- const isUserParamsExists = async (req: Request, res: Response, next: NextFunction) => {
+const isUserParamsExists = async (req: Request, res: Response, next: NextFunction) => {
   const user = await UserCollection.findOneByUsername(req.params.username);
 
   if (user) {
@@ -192,7 +192,7 @@ const isAuthorExists = async (req: Request, res: Response, next: NextFunction) =
 /**
  * Checks if a user with username in req.query exists
  */
- const isUserQueryExists = async (req: Request, res: Response, next: NextFunction) => {
+const isUserQueryExists = async (req: Request, res: Response, next: NextFunction) => {
   const user = await UserCollection.findOneByUsername(req.query.username as string);
 
   if (user) {
