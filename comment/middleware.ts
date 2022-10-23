@@ -6,96 +6,98 @@ import CommentCollection from '../comment/collection';
 /**
  * Checks if a category with a category in req.query is valid
  */
-const isValidCategory = async(req: Request, res: Response, next: NextFunction) => {
-    if (!req.query.category) {
-        res.status(400).json({
-            error: 'Provided category must be nonempty'
-        });
-        return;
-    }
+const isValidCategory = async (req: Request, res: Response, next: NextFunction) => {
+  if (!req.query.category) {
+    res.status(400).json({
+      error: 'Provided category must be nonempty'
+    });
+    return;
+  }
 
-    const category = Number(req.query.category);
+  const category = Number(req.query.category);
 
-    if (!Number.isInteger(category) || category < 0) {
-        res.status(400).json({
-            error: `Provided category must be an integer >= 0. The category ${req.query.category} is not allowed.`
-        });
-        return;
-    }
+  if (!Number.isInteger(category) || category < 0) {
+    res.status(400).json({
+      error: `Provided category must be an integer >= 0. The category ${req.query.category as string} is not allowed.`
+    });
+    return;
+  }
 
-    next();
+  next();
 };
 
 /**
  * Checks if a category with a category in req.body is valid
  */
- const isValidCategoryInBody = async(req: Request, res: Response, next: NextFunction) => {
-    if (req.body.category !== undefined) {
-        if (!req.body.category) {
-            res.status(400).json({
-                error: 'Provided category must be nonempty'
-            });
-            return;
-        }
-    
-        const category = Number(req.body.category);
-    
-        if (!Number.isInteger(category) || category < 0) {
-            res.status(400).json({
-                error: `Provided category must be an integer >= 0. The category ${req.body.category} is not allowed.`
-            });
-            return;
-        }
+const isValidCategoryInBody = async (req: Request, res: Response, next: NextFunction) => {
+  if (req.body.category !== undefined) {
+    if (!req.body.category) {
+      res.status(400).json({
+        error: 'Provided category must be nonempty'
+      });
+      return;
     }
-    next();
+
+    const category = Number(req.body.category);
+
+    if (!Number.isInteger(category) || category < 0) {
+      res.status(400).json({
+        error: `Provided category must be an integer >= 0. The category ${req.body.category as string} is not allowed.`
+      });
+      return;
+    }
+  }
+
+  next();
 };
 
 /**
  * Checks if valid comment contents, if comment contents exist
  */
-const isValidCommentContents = async(req: Request, res: Response, next: NextFunction) => {
-    if (req.body.content !== undefined) {
-        return isValidFreetContent(req, res, next);
-    }
+const isValidCommentContents = async (req: Request, res: Response, next: NextFunction) => {
+  if (req.body.content !== undefined) {
+    isValidFreetContent(req, res, next);
+    return;
+  }
 
-    next();
-}
+  next();
+};
 
 /**
  * Checks if a comment with a commentId in req.params exists
  */
-const isCommentExists = async(req: Request, res:Response, next: NextFunction) => {
-    const validFormat = Types.ObjectId.isValid(req.params.commentId);
-    const comment = validFormat ? await CommentCollection.findOne(req.params.commentId) : '';
-    if (!comment) {
-        res.status(404).json({
-            error: {
-                commentNotFound: `Comment with comment ID ${req.params.commentId} does not exist.`
-            }
-        });
-        return;
-    }
+const isCommentExists = async (req: Request, res: Response, next: NextFunction) => {
+  const validFormat = Types.ObjectId.isValid(req.params.commentId);
+  const comment = validFormat ? await CommentCollection.findOne(req.params.commentId) : '';
+  if (!comment) {
+    res.status(404).json({
+      error: {
+        commentNotFound: `Comment with comment ID ${req.params.commentId} does not exist.`
+      }
+    });
+    return;
+  }
 
-    next();
-}
+  next();
+};
 
 const isValidCommentModifier = async (req: Request, res: Response, next: NextFunction) => {
-    const comment = await CommentCollection.findOne(req.params.commentId);
-    const userId = comment.author._id;
-    if (req.session.userId !== userId.toString()) {
-        res.status(403).json({
-            error: 'Cannot modify other users\' comments.'
-        });
-        return;
-    }
+  const comment = await CommentCollection.findOne(req.params.commentId);
+  const userId = comment.author._id;
+  if (req.session.userId !== userId.toString()) {
+    res.status(403).json({
+      error: 'Cannot modify other users\' comments.'
+    });
+    return;
+  }
 
-    next();
+  next();
 };
 
 export {
-    isValidCategory,
-    isValidCategoryInBody,
-    isValidCommentContents,
-    isCommentExists,
-    isValidCommentModifier
-}
+  isValidCategory,
+  isValidCategoryInBody,
+  isValidCommentContents,
+  isCommentExists,
+  isValidCommentModifier
+};

@@ -33,66 +33,66 @@ class CommentCollection {
     });
     await comment.save();
     return comment.populate([
-        'author',
-        {
-            path: 'commentOn',
-            populate: {path: 'authorId'}
-        }
+      'author',
+      {
+        path: 'commentOn',
+        populate: {path: 'authorId'}
+      }
     ]);
   }
 
   /**
    * Find a comment by commentId
-   * 
+   *
    * @param {string} commentId - The id of the comment to find
    * @returns {Promise<HydratedDocument<Comment>> | Promise<null>} - The comment with the given commentId, if any
    */
   static async findOne(commentId: Types.ObjectId | string): Promise<HydratedDocument<Comment>> {
     return CommentModel.findOne({_id: commentId}).populate([
-        'author',
-        {
-            path: 'commentOn',
-            populate: {path: 'authorId'}
-        }
+      'author',
+      {
+        path: 'commentOn',
+        populate: {path: 'authorId'}
+      }
     ]);
   }
 
   /**
    * Get all the comments on a given object
-   * 
+   *
    * @param {string} commentOn - The id of the object being commented on
    * @returns {Promise<HydratedDocument<Comment>[]>} - An array of all the comments
    */
   static async findAllById(commentOn: Types.ObjectId | string): Promise<Array<HydratedDocument<Comment>>> {
     return CommentModel.find({commentOn}).populate([
-        'author',
-        {
-            path: 'commentOn',
-            populate: {path: 'authorId'}
-        }
+      'author',
+      {
+        path: 'commentOn',
+        populate: {path: 'authorId'}
+      }
     ]);
   }
 
   /**
    * Get all the comments of a given category on a given object
-   * 
+   *
    * @param {string} commentOn - The id of the object being commented on
    * @param {number} category - The number of category
    * @returns {Promise<HydratedDocument<Comment>[]>} - An array of all the comments
    */
-   static async findAllByIdAndComment(commentOn: Types.ObjectId | string, category: number): Promise<Array<HydratedDocument<Comment>>> {
+  static async findAllByIdAndComment(commentOn: Types.ObjectId | string, category: number): Promise<Array<HydratedDocument<Comment>>> {
     return CommentModel.find({commentOn, category}).populate([
-        'author',
-        {
-            path: 'commentOn',
-            populate: {path: 'authorId'}
-        }
+      'author',
+      {
+        path: 'commentOn',
+        populate: {path: 'authorId'}
+      }
     ]);
   }
 
   /**
    * Update a comment with the new content and/or category
-   * 
+   *
    * @param {string} commentId  - The commentId of the comment to update
    * @param {Object} commentDetails - An object with the comment's updated information
    * @return {Promise<HydratedDocument<Comment>>} - The updated comment
@@ -100,20 +100,20 @@ class CommentCollection {
   static async updateOne(commentId: Types.ObjectId | string, commentDetails: any): Promise<HydratedDocument<Comment>> {
     const comment = await CommentModel.findOne({_id: commentId});
     if (commentDetails.content) {
-        comment.content = commentDetails.content as string;
+      comment.content = commentDetails.content as string;
     }
 
     if (commentDetails.category) {
-        comment.category = commentDetails.category as number;
+      comment.category = commentDetails.category as number;
     }
 
     await comment.save();
     return comment;
-  } 
+  }
 
   /**
    * Delete a comment with the given commentId.
-   * 
+   *
    * @param {string} commentId - The commentId of the comment to delete
    * @return {Promise<Boolean>} - true if the comment has been deleted, false otherwise
    */
