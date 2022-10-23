@@ -70,7 +70,7 @@ router.post(
     [
         userValidator.isUserLoggedIn,
         freetValidator.isValidFreetContent,
-        commentValidator.isValidCategory,
+        commentValidator.isValidCategoryInBody,
         freetValidator.isFreetExistsInBody
     ],
     async(req: Request, res: Response) => {
@@ -107,7 +107,7 @@ router.delete(
     async (req: Request, res: Response) => {
         await CommentCollection.deleteOne(req.params.commentId);
         res.status(200).json({
-            message: 'Your follow was deleted successfully.'
+            message: 'Your comment was deleted successfully.'
         });
     }
 );
@@ -133,8 +133,8 @@ router.put(
         userValidator.isUserLoggedIn,
         commentValidator.isCommentExists,
         commentValidator.isValidCommentModifier,
-        freetValidator.isValidFreetContent,
-        commentValidator.isValidCategory
+        commentValidator.isValidCommentContents,
+        commentValidator.isValidCategoryInBody
     ],
     async (req: Request, res: Response) => {
         const comment = await CommentCollection.updateOne(req.params.commentId, req.body);

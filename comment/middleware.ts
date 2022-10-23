@@ -1,4 +1,5 @@
 import type {Request, Response, NextFunction} from 'express';
+import {isValidFreetContent} from '../freet/middleware';
 import {Types} from 'mongoose';
 import CommentCollection from '../comment/collection';
 
@@ -26,6 +27,41 @@ const isValidCategory = async(req: Request, res: Response, next: NextFunction) =
 };
 
 /**
+ * Checks if a category with a category in req.body is valid
+ */
+ const isValidCategoryInBody = async(req: Request, res: Response, next: NextFunction) => {
+    if (req.body.category !== undefined) {
+        if (!req.body.category) {
+            res.status(400).json({
+                error: 'Provided category must be nonempty'
+            });
+            return;
+        }
+    
+        const category = Number(req.body.category);
+    
+        if (!Number.isInteger(category) || category < 0) {
+            res.status(400).json({
+                error: `Provided category must be an integer >= 0. The category ${req.body.category} is not allowed.`
+            });
+            return;
+        }
+    }
+    next();
+};
+
+/**
+ * Checks if valid comment contents, if comment contents exist
+ */
+const isValidCommentContents = async(req: Request, res: Response, next: NextFunction) => {
+    if (req.body.content !== undefined) {
+        return isValidFreetContent(req, res, next);
+    }
+
+    next();
+}
+
+/**
  * Checks if a comment with a commentId in req.params exists
  */
 const isCommentExists = async(req: Request, res:Response, next: NextFunction) => {
@@ -37,7 +73,7 @@ const isCommentExists = async(req: Request, res:Response, next: NextFunction) =>
                 commentNotFound: `Comment with comment ID ${req.params.commentId} does not exist.`
             }
         });
-        return
+        return;
     }
 
     next();
@@ -58,6 +94,8 @@ const isValidCommentModifier = async (req: Request, res: Response, next: NextFun
 
 export {
     isValidCategory,
+    isValidCategoryInBody,
+    isValidCommentContents,
     isCommentExists,
     isValidCommentModifier
 }

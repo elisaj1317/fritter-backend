@@ -62,7 +62,7 @@ const isFreetExistsInQuery = async (req: Request, res: Response, next: NextFunct
  */
 const isValidFreetContent = (req: Request, res: Response, next: NextFunction) => {
   const {content} = req.body as {content: string};
-  if (!content.trim()) {
+  if (!content?.trim()) {
     res.status(400).json({
       error: 'Freet content must be at least one character long.'
     });
