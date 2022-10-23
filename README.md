@@ -384,7 +384,7 @@ This renders the `index.html` file that will be used to interact with the backen
 
 - `403` if the user is not logged in
 
-#### `GET /api/likes/count/?freet=FREETID` - Get count of likes on a freet
+#### `GET /api/likes/count/?freetId=FREETID` - Get count of likes on a freet
 
 **Returns**
 
@@ -421,27 +421,25 @@ This renders the `index.html` file that will be used to interact with the backen
 - `404` if `freetId` is not a recognized freetId of any freet
   
 
-#### `GET /api/comments?freet=FREETID` - Get all comments associated with a freet
+#### `GET /api/comments?freetId=FREETID` - Get all comments associated with a freet
 
 **Returns**
 
-- An array of comments on freet with id `freet`
+- An array of comments on freet with id `freetId`
 
 **Throws**
 
-- `400` if `freet` is not given
-- `404` if `freet` is invalid or is not a recognized id of any freet
+- `404` if `freetId` is invalid or is not a recognized id of any freet
 
-#### `GET /api/comments?freet=FREETID&category=CATEGORY` - Get comments of a specific category associated with a freet
+#### `GET /api/comments?freetId=FREETID&category=CATEGORY` - Get comments of a specific category associated with a freet
 
 **Returns**
 
-- An array of comments on freet with id `freet` and category `category`
+- An array of comments on freet with id `freetId` and category `category`
 
 **Throws**
-
-- `400` if `freet` is not given
-- `404` if `freet` is invalid or is not a recognized freetId of any freet or if `category` is not a recognized category
+- `400` if `category` is invalid
+- `404` if `freetId` is invalid or is not a recognized freetId
 
 #### `POST /api/comments` - Create a new comment
 
@@ -461,7 +459,7 @@ This renders the `index.html` file that will be used to interact with the backen
 - `403` if the user is not logged in
 - `400` If the comment `content` is empty or a stream of empty spaces or if the `category` is invalid
 - `413` If the comment content is more than 140 characters long
-- `404` if `freetId` or is invalid or is not a recognized freetId of any freet
+- `404` if `freetId` is invalid or is not a recognized
 
 #### `DELETE /api/comments/:commentId?` - Delete an existing comment
 
@@ -491,7 +489,7 @@ This renders the `index.html` file that will be used to interact with the backen
 - `403` if the user is not logged in
 - `404` if the `commentId` is invalid
 - `403` if the user is not the author of the comment
-- `400` if the new comment content is empty or a stream of empty spaces
+- `400` if the new comment content is empty or a stream of empty spaces or if the category is not valid
 - `413` if the new comment content is more than 140 characters long
 
 #### `GET /api/menus` - Get custom menu bar for authenticated user

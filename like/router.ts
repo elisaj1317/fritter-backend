@@ -73,7 +73,7 @@ router.post(
     const curUserId = (req.session.userId as string) ?? '';
     const freetId = (req.body.freetId as string);
     await LikeCollection.addOne(curUserId, freetId);
-    res.status(200).json({
+    res.status(201).json({
       message: 'Your like was completed successfully'
     });
   }
