@@ -87,7 +87,7 @@ router.post(
  * @param {string} freetId - The id of the freet being unliked
  * @returns {string} - A success message
  * @throws {403} - If the user is not logged in
- * @throws {404} - If there does not exist a like between the current user and the freetId 
+ * @throws {404} - If there does not exist a like between the current user and the freetId
  * or if the given freet does not exist
  */
 router.delete(

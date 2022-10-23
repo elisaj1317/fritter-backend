@@ -30,7 +30,7 @@ class LikeCollection {
    * @param {string} likedObject - The freetId of the freet who was liked
    * @return {Promise<HydratedDocument<Like> | Promise<null>} - The follow with the given liker and likedObject
    */
-   static async findOne(userId: Types.ObjectId | string, likedObject: Types.ObjectId | string): Promise<HydratedDocument<Like>> {
+  static async findOne(userId: Types.ObjectId | string, likedObject: Types.ObjectId | string): Promise<HydratedDocument<Like>> {
     return LikeModel.findOne({liker: userId, likedObject});
   }
 

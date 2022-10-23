@@ -50,7 +50,7 @@ const constructFreetResponse = (freet: HydratedDocument<Freet>): FreetResponse =
  * @param {Freet} freet - A freet
  * @returns {FreetResponse} - The freet object formatted for the frontend
  */
- const constructFreetResponseFromPopulatedFreet = (freet: PopulatedFreet): FreetResponse => {
+const constructFreetResponseFromPopulatedFreet = (freet: PopulatedFreet): FreetResponse => {
   const {username} = freet.authorId;
   return {
     _id: freet._id.toString(),
