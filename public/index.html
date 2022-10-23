@@ -5,6 +5,7 @@
   <meta name="author" content="6.170 Staff">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="/stylesheets/style.css">
+  <script src="/scripts/like.js"></script>
   <script src="/scripts/follow.js"></script>
   <script src="/scripts/freet.js"></script>
   <script src="/scripts/user.js"></script>
@@ -158,6 +159,38 @@
             <input id="username" name="username">
           </div>
           <input type="submit" value="Unfollow User">
+        </form>
+
+        <form id="get-liked-freets">
+          <h3>Get Current User's Liked Freets</h3>
+          <input type="submit" value="Get Liked Freets">
+        </form>
+
+        <form id="get-count-liked-freet">
+          <h3>Get Count of Likes on a Freet</h3>
+          <div>
+            <label for="freetId">Freet Id:</label>
+            <input id="freetId" name="freetId">
+          </div>
+          <input type="submit" value="Get Count Liked">
+        </form>
+
+        <form id="like-freet">
+          <h3>Like a Freet</h3>
+          <div>
+            <label for="freetId">Freet Id:</label>
+            <input id="freetId" name="freetId">
+          </div>
+          <input type="submit" value="Like Freet">
+        </form>
+
+        <form id="unlike-freet">
+          <h3>Remove Like from a Freet</h3>
+          <div>
+            <label for="freetId">Freet Id:</label>
+            <input id="freetId" name="freetId">
+          </div>
+          <input type="submit" value="Unlike Freet">
         </form>
 
       </div>

@@ -12,7 +12,7 @@ const isFollowExists = async (req: Request, res: Response, next: NextFunction) =
   if (!follow) {
     res.status(404).json({
       error: {
-        freetNotFound: `Follow between current user and  ${followUsername} does not exist.`
+        followNotFound: `Follow between current user and ${followUsername} does not exist.`
       }
     });
     return;
@@ -29,10 +29,8 @@ const isRepeatFollow = async (req: Request, res: Response, next: NextFunction) =
   const followUsername = (req.body.username as string);
   const follow = await FollowCollection.findOne(curUserId, followUsername);
   if (follow) {
-    res.status(404).json({
-      error: {
-        freetNotFound: `Follow between current user and  ${followUsername} alerady exists.`
-      }
+    res.status(409).json({
+      error: `Follow between current user and ${followUsername} already exists.`
     });
     return;
   }
@@ -49,10 +47,8 @@ const isFollowOneself = async (req: Request, res: Response, next: NextFunction) 
   const followUser = await UserCollection.findOneByUsername(followUsername);
   const followUserId = (followUser._id);
   if (followUserId.toString() === curUserId) {
-    res.status(404).json({
-      error: {
-        freetNotFound: 'Following yourself is not allowed.'
-      }
+    res.status(400).json({
+      error: 'Following yourself is not allowed.'
     });
     return;
   }

@@ -372,20 +372,29 @@ This renders the `index.html` file that will be used to interact with the backen
 **Throws**
 
 - `403` if the user is not logged in
-- `404` if `username` is not a recognized username of any user
+- `404` if `username` is not a recognized username of any user or current user does not follow them
 
-#### `GET /api/likes/freet?username=USERNAME` - Get a user's liked freets
+#### `GET /api/likes/freets` - Get a current user's liked freets
 
 **Returns**
 
-- An array of freets which `username` has liked
+- An array of freets which current user has liked
 
 **Throws**
 
-- `400` if `username` is not given or valid
-- `404` if `username` is not a recognized username of any user
+- `403` if the user is not logged in
 
-#### `POST /api/likes/` - Get a user's liked freets
+#### `GET /api/likes/count/?freet=FREETID` - Get count of likes on a freet
+
+**Returns**
+
+- A count of likes on a given freet
+
+**Throws**
+
+- `404` if `freetId` is not a recognized freedId of any freet
+
+#### `POST /api/likes` - Like an object
 
 **Body**
 - `freetId` {string} - The id of freet liked
@@ -393,7 +402,6 @@ This renders the `index.html` file that will be used to interact with the backen
 **Returns**
 
 - A success message
-- An object with like details
 
 **Throws**
 

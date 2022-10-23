@@ -43,7 +43,11 @@ const formsAndHandlers = {
   'view-followers': viewFollowers,
   'view-follower-feed': viewFollowerFeed,
   'add-follow': createFollow,
-  'delete-follow': deleteFollow
+  'delete-follow': deleteFollow,
+  'get-liked-freets': viewLikedFreets,
+  'get-count-liked-freet': viewLikeCount,
+  'like-freet': createLike,
+  'unlike-freet': deleteLike
 };
 
 // Attach handlers to forms

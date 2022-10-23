@@ -43,6 +43,25 @@ const constructFreetResponse = (freet: HydratedDocument<Freet>): FreetResponse =
   };
 };
 
+/**
+ * Transform Freet object into an object
+ * with all the information needed by the frontend
+ *
+ * @param {Freet} freet - A freet
+ * @returns {FreetResponse} - The freet object formatted for the frontend
+ */
+ const constructFreetResponseFromPopulatedFreet = (freet: PopulatedFreet): FreetResponse => {
+  const {username} = freet.authorId;
+  return {
+    _id: freet._id.toString(),
+    author: username,
+    dateCreated: formatDate(freet.dateCreated),
+    content: freet.content,
+    dateModified: formatDate(freet.dateModified)
+  };
+};
+
 export {
-  constructFreetResponse
+  constructFreetResponse,
+  constructFreetResponseFromPopulatedFreet
 };

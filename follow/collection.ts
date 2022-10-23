@@ -34,7 +34,7 @@ class FollowCollection {
      * @return {Promise<HydratedDocument<Follow>> | Promise<null>} - The follow with the given to and from,
      * if any exist
      */
-  static async findOne(fromUserId: string, toUsername: string): Promise<HydratedDocument<Follow>> {
+  static async findOne(fromUserId: Types.ObjectId | string, toUsername: string): Promise<HydratedDocument<Follow>> {
     const toUser = await UserCollection.findOneByUsername(toUsername);
     return FollowModel.findOne({fromUser: fromUserId, toUser: toUser._id});
   }

@@ -116,7 +116,7 @@ router.post(
  * @param {string} username - The username of the user to unfollow
  * @return {string} - A success message
  * @throws {403} - If the user is not logged in
- * @throws {404} - If there exists a Follow between the curent user and the username
+ * @throws {404} - If there does not exists a Follow between the curent user and the username
  */
 router.delete(
   '/:username?',
