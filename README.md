@@ -369,20 +369,7 @@ This renders the `index.html` file that will be used to interact with the backen
 
 - `403` if the user is not logged in
 
-#### `GET /api/likes/count/?freetId=FREETID` - Get count of likes on a freet
-
-**Returns**
-
-- A count of likes on a given freet
-
-**Throws**
-
-- `404` if `freetId` is not a recognized freedId of any freet
-
-#### `POST /api/likes` - Like an object
-
-**Body**
-- `freetId` {string} - The id of freet liked
+#### `PUT /api/likes/freet/:freetId?` - Like a freet
 
 **Returns**
 
@@ -391,10 +378,10 @@ This renders the `index.html` file that will be used to interact with the backen
 **Throws**
 
 - `403` if the user is not logged in
-- `409` if the user attempts to like a post they've liked before
+- `409` if the user attempts to like a freet they've liked before
 - `404` if `freetId` is not a recognized freetId of any freet
 
-#### `DELETE /api/likes/:freetId?` - Delete an existing like
+#### `DELETE /api/likes/freet/:freetId?` - Delete an existing like on a freet
 
 **Returns**
 
@@ -403,8 +390,30 @@ This renders the `index.html` file that will be used to interact with the backen
 **Throws**
 
 - `403` if the user is not logged in
-- `404` if `freetId` is not a recognized freetId of any freet
-  
+- `404` if `freetId` is not a recognized freetId of any freet or if there does not exist a like from the current user on `freetId`
+
+#### `PUT /api/likes/comment/:commentId?` - Like a comment
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `403` if the user is not logged in
+- `409` if the user attempts to like a comment they've liked before
+- `404` if `commentId` is not a recognized commentId of any comment
+
+#### `DELETE /api/likes/comment/:commentId?` - Delete an existing like on a freet
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `403` if the user is not logged in
+- `404` if `commentId` is not a recognized commentId of any comment or if there does not exist a like from the current user on `commentId`
 
 #### `GET /api/comments?freetId=FREETID` - Get all comments associated with a freet
 

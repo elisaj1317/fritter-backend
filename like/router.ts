@@ -40,7 +40,7 @@ router.get(
  * @param {string} freetId - The id of the freet being liked
  * @returns {string} - A success message
  * @throws {403} - If the user is not logged in
- * @throws {409} - If the user attempts to like a post they've liked before
+ * @throws {409} - If the user attempts to like a freet they've liked before
  * @throws {404} - If the `freetId` is not a recognized freetId of any freet
  */
 router.put(
@@ -68,7 +68,7 @@ router.put(
  * @param {string} freetId - The id of the freet being unliked
  * @returns {string} - A success message
  * @throws {403} - If the user is not logged in
- * @throws {404} - If there does not exist a like between the current user and the freetId
+ * @throws {404} - If there does not exist a like from the current user on freetId
  * or if the given freet does not exist
  */
 router.delete(
@@ -124,7 +124,7 @@ router.put(
  * @param {string} commentId - The id of the comment being unliked
  * @returns {string} - A success message
  * @throws {403} - If the user is not logged in
- * @throws {404} - If there does not exist a like between the current user and the commentId
+ * @throws {404} - If there does not exist a like from the current user on commentId
  * or if the given comment does not exist
  */
 router.delete(
