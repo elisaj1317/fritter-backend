@@ -435,11 +435,10 @@ This renders the `index.html` file that will be used to interact with the backen
 - `400` if `category` is invalid
 - `404` if `freetId` is invalid or is not a recognized freetId
 
-#### `POST /api/comments` - Create a new comment
+#### `POST /api/comments/:freetId?` - Create a new comment
 
 **Body**
 
-- `freetId` _{objectId}_ - The freetId of freet where comment is being added
 - `content` _{string}_ - The content of the comment
 - `category` _{string}_ - The category of the comment
 
@@ -463,8 +462,7 @@ This renders the `index.html` file that will be used to interact with the backen
 
 **Throws**
 
-- `403` if the user is not logged in
-- `403` if the user is not the author of the comment
+- `403` if the user is not logged in or is not the author of the comment
 - `404` if the commentId is invalid
 
 #### `PUT /api/comments/:commentId?` - Update an existing comment
@@ -472,7 +470,7 @@ This renders the `index.html` file that will be used to interact with the backen
 **Body** _(no need to add fields that are not being changed)_
 
 - `content` _{string}_ - The new content of the comment
-- `category` _{string}_ - The new category of the comment
+- `category` _{integer}_ - The new category of the comment
 
 **Returns**
 
@@ -480,9 +478,8 @@ This renders the `index.html` file that will be used to interact with the backen
 
 **Throws**
 
-- `403` if the user is not logged in
+- `403` if the user is not logged in or is not the author of the comment
 - `404` if the `commentId` is invalid
-- `403` if the user is not the author of the comment
 - `400` if the new comment content is empty or a stream of empty spaces or if the category is not valid
 - `413` if the new comment content is more than 140 characters long
 
