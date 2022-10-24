@@ -83,7 +83,7 @@ const isCommentExists = async (req: Request, res: Response, next: NextFunction) 
 
 const isValidCommentModifier = async (req: Request, res: Response, next: NextFunction) => {
   const comment = await CommentCollection.findOne(req.params.commentId);
-  const userId = comment.author._id;
+  const userId = comment.authorId._id;
   if (req.session.userId !== userId.toString()) {
     res.status(403).json({
       error: 'Cannot modify other users\' comments.'

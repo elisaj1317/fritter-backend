@@ -6,7 +6,7 @@ import type {Freet} from '../freet/model';
 // Type definition for Comment on the backend
 export type Comment = {
   _id: Types.ObjectId;
-  author: Types.ObjectId;
+  authorId: Types.ObjectId;
   content: string;
   category: number;
   commentOn: Types.ObjectId;
@@ -16,7 +16,7 @@ export type Comment = {
 
 export type PopulatedComment = {
   _id: Types.ObjectId;
-  author: User;
+  authorId: User;
   content: string;
   category: number;
   commentOn: Freet;
@@ -25,7 +25,7 @@ export type PopulatedComment = {
 };
 
 const CommentSchema = new Schema({
-  author: {
+  authorId: {
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true

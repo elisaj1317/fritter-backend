@@ -1,5 +1,5 @@
 import type {HydratedDocument, Types} from 'mongoose';
-import type {Like} from './model';
+import type {Like, objectsToLike} from './model';
 import LikeModel from './model';
 
 /**
@@ -11,13 +11,15 @@ class LikeCollection {
    * Add a like to the collection
    *
    * @param {string} liker - the username of the user performing the like
-   * @param {string} likedObject - the id of the freet being liked
+   * @param {string} likedObject - the id of the object being liked
+   * @param {string} docModel - the model of the likedObject
    * @return {Promise<Boolean>} - true if the like was created successfully, false otherwise
    */
-  static async addOne(liker: Types.ObjectId | string, likedObject: Types.ObjectId | string): Promise<boolean> {
+  static async addOne(liker: Types.ObjectId | string, likedObject: Types.ObjectId | string, docModel: objectsToLike): Promise<boolean> {
     const like = new LikeModel({
       liker,
-      likedObject
+      likedObject,
+      docModel
     });
     await like.save();
     return like !== null;
@@ -26,22 +28,22 @@ class LikeCollection {
   /**
    * Find a like given userId and likedObject
    *
-   * @param {string} userId - The userId of the user who likes other freets
-   * @param {string} likedObject - The freetId of the freet who was liked
+   * @param {string} userId - The userId of the user who likes other objects
+   * @param {string} likedObject - The objectId of the object that was liked
    * @return {Promise<HydratedDocument<Like> | Promise<null>} - The follow with the given liker and likedObject
    */
-  static async findOne(userId: Types.ObjectId | string, likedObject: Types.ObjectId | string): Promise<HydratedDocument<Like>> {
-    return LikeModel.findOne({liker: userId, likedObject});
+  static async findOne(userId: Types.ObjectId | string, likedObject: Types.ObjectId | string, docModel: objectsToLike): Promise<HydratedDocument<Like>> {
+    return LikeModel.findOne({liker: userId, likedObject, docModel});
   }
 
   /**
-   * Find all likes of a given user by userId
+   * Find all likes of a given user by userId and of a given model
    *
-   * @param {string} userId - The userId of the user who likes other freets
+   * @param {string} userId - The userId of the user who likes other objects
    * @return {Promise<HydratedDocument<Like>[]>} - An array of all the likes
    */
-  static async findAllLikesById(userId: Types.ObjectId | string): Promise<Array<HydratedDocument<Like>>> {
-    return LikeModel.find({liker: userId}).populate([
+  static async findAllLikesByIdAndDoc(userId: Types.ObjectId | string, docModel: objectsToLike): Promise<Array<HydratedDocument<Like>>> {
+    return LikeModel.find({liker: userId, docModel}).populate([
       'liker',
       {
         path: 'likedObject',
@@ -51,24 +53,26 @@ class LikeCollection {
   }
 
   /**
-   * Find count of likes on a freet by freetId
+   * Find count of likes on a object by objectId
    *
-   * @param {string} freetId - The freetId of the freet who is liked
+   * @param {string} objectId - The objectId of the object that is liked
+   * @param {string} docModel - The model of the object with the objectId
    * @return {Promise<number>} - The number of likes on the post
    */
-  static async findCount(freetId: Types.ObjectId | string): Promise<number> {
-    return LikeModel.count({likedObject: freetId});
+  static async findCount(objectId: Types.ObjectId | string, docModel: objectsToLike): Promise<number> {
+    return LikeModel.count({likedObject: objectId, docModel});
   }
 
   /**
    * Delete a like from the collection
    *
    * @param {string} likerId - The userId of user liking an object
-   * @param {string} likedObject - The freetId of freet being deleted
+   * @param {string} likedObject - The objectId of object whose like is deleted
+   * @param {string} docModel - The model of likedObject
    * @return {Promise<Boolean>} - true if the like has been deleted, false otherwise
    */
-  static async deleteOne(likerId: Types.ObjectId | string, likedObject: Types.ObjectId | string) {
-    const likeSuccess = await LikeModel.deleteOne({likerId, likedObject});
+  static async deleteOne(likerId: Types.ObjectId | string, likedObject: Types.ObjectId | string, docModel: objectsToLike) {
+    const likeSuccess = await LikeModel.deleteOne({likerId, likedObject, docModel});
     return likeSuccess !== null;
   }
 }

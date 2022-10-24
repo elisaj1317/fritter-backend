@@ -1,5 +1,5 @@
 import type {HydratedDocument} from 'mongoose';
-import type {Like, PopulatedLike} from './model';
+import type {Like, PopulatedFreetLike} from './model';
 import type {PopulatedFreet} from '../freet/model';
 
 /**
@@ -9,7 +9,7 @@ import type {PopulatedFreet} from '../freet/model';
  * @returns {PopulatedFreet} - The freet object associated with the like
  */
 const getPopulatedFreetFromLike = (like: HydratedDocument<Like>): PopulatedFreet => {
-  const likeCopy: PopulatedLike = {
+  const likeCopy: PopulatedFreetLike = {
     ...like.toObject({
       versionKey: false // Cosmetics; prevents returning of __v property
     })

@@ -10,20 +10,26 @@ function viewLikedFreets(fields) {
     .catch(showResponse);
 }
 
-function viewLikeCount(fields) {
-    fetch(`/api/likes/count/?freetId=${fields.freetId}`)
-    .then(showResponse)
-    .catch(showResponse);
-}
-
-function createLike(fields) {
-    fetch('/api/likes', {method: 'POST', body: JSON.stringify(fields), headers: {'Content-Type': 'application/json'}})
+function createLikeFreet(fields) {
+    fetch(`/api/likes/freet/${fields.freetId}`, {method: 'PUT'})
     .then(showResponse)
     .catch(showResponse)
 }
 
-function deleteLike(fields) {
-    fetch(`/api/likes/${fields.freetId}`, {method: 'DELETE'})
+function deleteLikeFreet(fields) {
+    fetch(`/api/likes/freet/${fields.freetId}`, {method: 'DELETE'})
+    .then(showResponse)
+    .catch(showResponse);
+}
+
+function createLikeComment(fields) {
+    fetch(`/api/likes/comment/${fields.commentId}`, {method: 'PUT'})
+    .then(showResponse)
+    .catch(showResponse)
+}
+
+function deleteLikeComment(fields) {
+    fetch(`/api/likes/comment/${fields.commentId}`, {method: 'DELETE'})
     .then(showResponse)
     .catch(showResponse);
 }

@@ -1,7 +1,6 @@
 import type {HydratedDocument, Types} from 'mongoose';
 import type {Comment} from './model';
 import CommentModel from './model';
-import UserCollection from '../user/collection';
 
 /**
  * This files contains a class that has the functionality to explore comments
@@ -24,7 +23,7 @@ class CommentCollection {
   static async addOne(authorId: Types.ObjectId | string, objectId: Types.ObjectId | string, content: string, category: number): Promise<HydratedDocument<Comment>> {
     const date = new Date();
     const comment = new CommentModel({
-      author: authorId,
+      authorId,
       content,
       category,
       commentOn: objectId,
@@ -33,7 +32,7 @@ class CommentCollection {
     });
     await comment.save();
     return comment.populate([
-      'author',
+      'authorId',
       {
         path: 'commentOn',
         populate: {path: 'authorId'}
@@ -49,7 +48,7 @@ class CommentCollection {
    */
   static async findOne(commentId: Types.ObjectId | string): Promise<HydratedDocument<Comment>> {
     return CommentModel.findOne({_id: commentId}).populate([
-      'author',
+      'authorId',
       {
         path: 'commentOn',
         populate: {path: 'authorId'}
@@ -65,7 +64,7 @@ class CommentCollection {
    */
   static async findAllById(commentOn: Types.ObjectId | string): Promise<Array<HydratedDocument<Comment>>> {
     return CommentModel.find({commentOn}).populate([
-      'author',
+      'authorId',
       {
         path: 'commentOn',
         populate: {path: 'authorId'}
@@ -82,7 +81,7 @@ class CommentCollection {
    */
   static async findAllByIdAndComment(commentOn: Types.ObjectId | string, category: number): Promise<Array<HydratedDocument<Comment>>> {
     return CommentModel.find({commentOn, category}).populate([
-      'author',
+      'authorId',
       {
         path: 'commentOn',
         populate: {path: 'authorId'}

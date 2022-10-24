@@ -36,7 +36,7 @@ const constructCommentResponse = (comment: HydratedDocument<Comment>): CommentRe
 
   return {
     _id: commentCopy._id.toString(),
-    author: commentCopy.author.username,
+    author: commentCopy.authorId.username,
     content: commentCopy.content,
     category: commentCopy.category,
     commentOn: commentCopy.commentOn._id.toString(),
