@@ -72,8 +72,26 @@ class LikeCollection {
    * @return {Promise<Boolean>} - true if the like has been deleted, false otherwise
    */
   static async deleteOne(likerId: Types.ObjectId | string, likedObject: Types.ObjectId | string, docModel: objectsToLike) {
-    const likeSuccess = await LikeModel.deleteOne({likerId, likedObject, docModel});
+    const likeSuccess = await LikeModel.deleteOne({liker: likerId, likedObject, docModel});
     return likeSuccess !== null;
+  }
+
+  /**
+   * Delete all the likes by the given user
+   *
+   * @param {string} likerId - The id of user who likes items
+   */
+   static async deleteManyByUser(likerId: Types.ObjectId | string): Promise<void> {
+    await LikeModel.deleteMany({liker: likerId});
+  }
+
+  /**
+   * Delete all the likes of a given freet
+   *
+   * @param {string} freetId - The id of freet liked on
+   */
+   static async deleteManyByFreetId(freetId: Types.ObjectId | string): Promise<void> {
+    await LikeModel.deleteMany({likedObject: freetId});
   }
 }
 
