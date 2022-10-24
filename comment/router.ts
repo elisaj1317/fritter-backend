@@ -47,7 +47,7 @@ router.get(
   async (req: Request, res: Response) => {
     const freetId = (req.query.freetId as string) ?? '';
     const category = Number(req.query.category);
-    const freetComments = await CommentCollection.findAllByIdAndComment(freetId, category);
+    const freetComments = await CommentCollection.findAllByIdAndCategory(freetId, category);
     const response = freetComments.map(util.constructCommentResponse);
     res.status(200).json(response);
   }
@@ -56,7 +56,7 @@ router.get(
 /**
  * Create a new comment
  *
- * @name POST /api/comments
+ * @name POST /api/comments/:freetId?
  *
  * @param {string} freetId - The freetId of freet where comment is being added
  * @param {string} content - The content of the comment
@@ -68,16 +68,16 @@ router.get(
  * @throws {404} - if `freetId` is invalid or is not a recognized
  */
 router.post(
-  '/',
+  '/:freetId?',
   [
     userValidator.isUserLoggedIn,
     freetValidator.isValidFreetContent,
     commentValidator.isValidCategoryInBody,
-    freetValidator.isFreetExistsInBody
+    freetValidator.isFreetExists
   ],
   async (req: Request, res: Response) => {
     const curUserId = (req.session.userId as string) ?? '';
-    const freetId = (req.body.freetId as string);
+    const {freetId} = req.params;
     const content = (req.body.content as string);
     const category = Number(req.body.category);
     const comment = await CommentCollection.addOne(curUserId, freetId, content, category);

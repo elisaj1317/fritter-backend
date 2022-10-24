@@ -22,6 +22,7 @@ export type PopulatedComment = {
   commentOn: Freet;
   dateCreated: Date;
   dateModified: Date;
+  numLikes: number;
 };
 
 const CommentSchema = new Schema({
@@ -51,6 +52,19 @@ const CommentSchema = new Schema({
   dateModified: {
     type: Date,
     required: true
+  }
+}, {
+  toObject: { virtuals: true, versionKey: false },
+  toJSON: { virtuals: true, versionKey: false }
+});
+
+CommentSchema.virtual('numLikes', {
+  ref: 'Like',
+  localField: '_id',
+  foreignField: 'likedObject',
+  count: true,
+  match: {
+    docModel: 'Comment'
   }
 });
 

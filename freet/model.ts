@@ -22,6 +22,7 @@ export type PopulatedFreet = {
   dateCreated: Date;
   content: string;
   dateModified: Date;
+  numLikes: number;
 };
 
 // Mongoose schema definition for interfacing with a MongoDB table
@@ -49,6 +50,19 @@ const FreetSchema = new Schema<Freet>({
   dateModified: {
     type: Date,
     required: true
+  }
+}, {
+  toObject: { virtuals: true, versionKey: false },
+  toJSON: { virtuals: true, versionKey: false }
+});
+
+FreetSchema.virtual('numLikes', {
+  ref: 'Like',
+  localField: '_id',
+  foreignField: 'likedObject',
+  count: true,
+  match: {
+    docModel: 'Freet'
   }
 });
 

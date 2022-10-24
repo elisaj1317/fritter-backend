@@ -47,7 +47,7 @@ class LikeCollection {
       'liker',
       {
         path: 'likedObject',
-        populate: {path: 'authorId'}
+        populate: [{path: 'authorId'}, {path: 'numLikes'}]
       }
     ]);
   }

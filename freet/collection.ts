@@ -28,7 +28,7 @@ class FreetCollection {
       dateModified: date
     });
     await freet.save(); // Saves freet to MongoDB
-    return freet.populate('authorId');
+    return freet.populate(['authorId', 'numLikes']);
   }
 
   /**
@@ -38,7 +38,7 @@ class FreetCollection {
    * @return {Promise<HydratedDocument<Freet>> | Promise<null> } - The freet with the given freetId, if any
    */
   static async findOne(freetId: Types.ObjectId | string): Promise<HydratedDocument<Freet>> {
-    return FreetModel.findOne({_id: freetId}).populate('authorId');
+    return FreetModel.findOne({_id: freetId}).populate(['authorId', 'numLikes']);
   }
 
   /**
@@ -48,7 +48,7 @@ class FreetCollection {
    */
   static async findAll(): Promise<Array<HydratedDocument<Freet>>> {
     // Retrieves freets and sorts them from most to least recent
-    return FreetModel.find({}).sort({dateModified: -1}).populate('authorId');
+    return FreetModel.find({}).sort({dateModified: -1}).populate(['authorId', 'numLikes']);
   }
 
   /**
@@ -59,7 +59,7 @@ class FreetCollection {
    */
   static async findAllByUsername(username: string): Promise<Array<HydratedDocument<Freet>>> {
     const author = await UserCollection.findOneByUsername(username);
-    return FreetModel.find({authorId: author._id}).populate('authorId');
+    return FreetModel.find({authorId: author._id}).populate(['authorId', 'numLikes']);
   }
 
   /**
@@ -69,7 +69,7 @@ class FreetCollection {
    * @return {Promise<HydratedDocument<Freet>[]>} - An array of all of the freets
    */
   static async findAllByAuthorIds(userIds: Array<Types.ObjectId | string>): Promise<Array<HydratedDocument<Freet>>> {
-    return FreetModel.find({authorId: {$in: userIds}}).sort({dateModified: -1}).populate('authorId');
+    return FreetModel.find({authorId: {$in: userIds}}).sort({dateModified: -1}).populate(['authorId', 'numLikes']);
   }
 
   /**
@@ -84,7 +84,7 @@ class FreetCollection {
     freet.content = content;
     freet.dateModified = new Date();
     await freet.save();
-    return freet.populate('authorId');
+    return freet.populate(['authorId', 'numLikes']);
   }
 
   /**

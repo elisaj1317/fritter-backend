@@ -35,7 +35,7 @@ class CommentCollection {
       'authorId',
       {
         path: 'commentOn',
-        populate: {path: 'authorId'}
+        populate: [{path: 'authorId'}, {path:'numLikes'}]
       }
     ]);
   }
@@ -47,13 +47,7 @@ class CommentCollection {
    * @returns {Promise<HydratedDocument<Comment>> | Promise<null>} - The comment with the given commentId, if any
    */
   static async findOne(commentId: Types.ObjectId | string): Promise<HydratedDocument<Comment>> {
-    return CommentModel.findOne({_id: commentId}).populate([
-      'authorId',
-      {
-        path: 'commentOn',
-        populate: {path: 'authorId'}
-      }
-    ]);
+    return CommentModel.findOne({_id: commentId}).populate('authorId');
   }
 
   /**
@@ -63,13 +57,7 @@ class CommentCollection {
    * @returns {Promise<HydratedDocument<Comment>[]>} - An array of all the comments
    */
   static async findAllById(commentOn: Types.ObjectId | string): Promise<Array<HydratedDocument<Comment>>> {
-    return CommentModel.find({commentOn}).populate([
-      'authorId',
-      {
-        path: 'commentOn',
-        populate: {path: 'authorId'}
-      }
-    ]);
+    return CommentModel.find({commentOn}).populate(['authorId', 'numLikes']);
   }
 
   /**
@@ -79,14 +67,8 @@ class CommentCollection {
    * @param {number} category - The number of category
    * @returns {Promise<HydratedDocument<Comment>[]>} - An array of all the comments
    */
-  static async findAllByIdAndComment(commentOn: Types.ObjectId | string, category: number): Promise<Array<HydratedDocument<Comment>>> {
-    return CommentModel.find({commentOn, category}).populate([
-      'authorId',
-      {
-        path: 'commentOn',
-        populate: {path: 'authorId'}
-      }
-    ]);
+  static async findAllByIdAndCategory(commentOn: Types.ObjectId | string, category: number): Promise<Array<HydratedDocument<Comment>>> {
+    return CommentModel.find({commentOn, category}).populate(['authorId', 'numLikes']);
   }
 
   /**

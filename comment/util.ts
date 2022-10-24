@@ -10,6 +10,7 @@ type CommentResponse = {
   commentOn: string;
   dateCreated: string;
   dateModified: string;
+  numLikes: number;
 };
 
 /**
@@ -41,7 +42,8 @@ const constructCommentResponse = (comment: HydratedDocument<Comment>): CommentRe
     category: commentCopy.category,
     commentOn: commentCopy.commentOn._id.toString(),
     dateCreated: formatDate(commentCopy.dateCreated),
-    dateModified: formatDate(commentCopy.dateModified)
+    dateModified: formatDate(commentCopy.dateModified),
+    numLikes: commentCopy.numLikes
   };
 };
 

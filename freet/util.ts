@@ -9,6 +9,7 @@ type FreetResponse = {
   dateCreated: string;
   content: string;
   dateModified: string;
+  numLikes: number;
 };
 
 /**
@@ -57,7 +58,8 @@ const constructFreetResponseFromPopulatedFreet = (freet: PopulatedFreet): FreetR
     author: username,
     dateCreated: formatDate(freet.dateCreated),
     content: freet.content,
-    dateModified: formatDate(freet.dateModified)
+    dateModified: formatDate(freet.dateModified),
+    numLikes: freet.numLikes
   };
 };
 

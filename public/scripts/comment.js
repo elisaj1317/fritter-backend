@@ -17,7 +17,7 @@ function viewCommentsOnFreetAndCategory(fields) {
 }
 
 function createComment(fields) {
-    fetch('/api/comments', {method: 'POST', body: JSON.stringify(fields), headers: {'Content-Type': 'application/json'}})
+    fetch(`/api/comments/${fields.freetId}`, {method: 'POST', body: JSON.stringify(fields), headers: {'Content-Type': 'application/json'}})
     .then(showResponse)
     .catch(showResponse);
 }
