@@ -1,7 +1,7 @@
 import type {Types} from 'mongoose';
 import {Schema, model} from 'mongoose';
 import type {User} from '../user/model';
-import type {Freet, PopulatedFreet} from '../freet/model';
+import type {PopulatedFreet} from '../freet/model';
 
 export type objectsToLike = 'Freet' | 'Comment';
 

@@ -1,5 +1,4 @@
 import type {NextFunction, Request, Response} from 'express';
-import {request} from 'express';
 import express from 'express';
 import CommentCollection from './collection';
 import * as commentValidator from './middleware';
