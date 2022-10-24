@@ -35,7 +35,7 @@ class CommentCollection {
       'authorId',
       {
         path: 'commentOn',
-        populate: [{path: 'authorId'}, {path:'numLikes'}]
+        populate: [{path: 'authorId'}, {path: 'numLikes'}]
       }
     ]);
   }
@@ -108,7 +108,7 @@ class CommentCollection {
    *
    * @param {string} authorId - The id of author of comments
    */
-   static async deleteManyByAuthor(authorId: Types.ObjectId | string): Promise<void> {
+  static async deleteManyByAuthor(authorId: Types.ObjectId | string): Promise<void> {
     await CommentModel.deleteMany({authorId});
   }
 
@@ -117,7 +117,7 @@ class CommentCollection {
    *
    * @param {string} freetId - The id of freet commented on
    */
-   static async deleteManyByFreetId(freetId: Types.ObjectId | string): Promise<void> {
+  static async deleteManyByFreetId(freetId: Types.ObjectId | string): Promise<void> {
     await CommentModel.deleteMany({freetId});
   }
 }

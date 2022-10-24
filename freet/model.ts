@@ -52,8 +52,8 @@ const FreetSchema = new Schema<Freet>({
     required: true
   }
 }, {
-  toObject: { virtuals: true, versionKey: false },
-  toJSON: { virtuals: true, versionKey: false }
+  toObject: {virtuals: true, versionKey: false},
+  toJSON: {virtuals: true, versionKey: false}
 });
 
 FreetSchema.virtual('numLikes', {

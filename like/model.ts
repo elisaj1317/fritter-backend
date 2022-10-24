@@ -10,14 +10,14 @@ export type Like = {
   _id: Types.ObjectId;
   liker: Types.ObjectId;
   likedObject: Types.ObjectId;
-  docModel: objectsToLike
+  docModel: objectsToLike;
 };
 
 export type PopulatedFreetLike = {
   _id: Types.ObjectId;
   liker: User;
   likedObject: PopulatedFreet;
-  docModel: 'Freet'
+  docModel: 'Freet';
 };
 
 const LikeSchema = new Schema({

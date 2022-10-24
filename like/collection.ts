@@ -81,7 +81,7 @@ class LikeCollection {
    *
    * @param {string} likerId - The id of user who likes items
    */
-   static async deleteManyByUser(likerId: Types.ObjectId | string): Promise<void> {
+  static async deleteManyByUser(likerId: Types.ObjectId | string): Promise<void> {
     await LikeModel.deleteMany({liker: likerId});
   }
 
@@ -90,7 +90,7 @@ class LikeCollection {
    *
    * @param {string} freetId - The id of freet liked on
    */
-   static async deleteManyByFreetId(freetId: Types.ObjectId | string): Promise<void> {
+  static async deleteManyByFreetId(freetId: Types.ObjectId | string): Promise<void> {
     await LikeModel.deleteMany({likedObject: freetId});
   }
 }

@@ -184,7 +184,7 @@ const isUserParamsExists = async (req: Request, res: Response, next: NextFunctio
 
   res.status(404).json({
     error: {
-      username: `There is no account with the username ${req.params.username as string}`
+      username: `There is no account with the username ${req.params.username}`
     }
   });
 };
@@ -216,7 +216,5 @@ export {
   isAuthorExists,
   isValidUsername,
   isValidPassword,
-  isUserBodyExists,
-  isUserParamsExists,
-  isUserQueryExists
+  isUserParamsExists
 };

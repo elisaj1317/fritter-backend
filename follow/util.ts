@@ -31,5 +31,5 @@ const constructFollowResponse = (follow: HydratedDocument<Follow>): FollowRespon
 };
 
 export {
-  constructFollowResponse,
+  constructFollowResponse
 };

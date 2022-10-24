@@ -6,8 +6,8 @@ import LikeCollection from './collection';
  */
 const isFreetLikeRepeat = async (req: Request, res: Response, next: NextFunction) => {
   const curUserId = (req.session.userId as string) ?? '';
-  const freetId = (req.params.freetId as string);
-  const like = await LikeCollection.findOne(curUserId, freetId, "Freet");
+  const {freetId} = req.params;
+  const like = await LikeCollection.findOne(curUserId, freetId, 'Freet');
   if (like) {
     res.status(409).json({
       error: `Like between current user and the freet ${freetId} already exists.`
@@ -21,10 +21,10 @@ const isFreetLikeRepeat = async (req: Request, res: Response, next: NextFunction
 /**
  * Checks if unable to add a like due to repeat in user and commentId in req.params
  */
- const isCommentLikeRepeat = async (req: Request, res: Response, next: NextFunction) => {
+const isCommentLikeRepeat = async (req: Request, res: Response, next: NextFunction) => {
   const curUserId = (req.session.userId as string) ?? '';
   const {commentId} = req.params;
-  const like = await LikeCollection.findOne(curUserId, commentId, "Comment");
+  const like = await LikeCollection.findOne(curUserId, commentId, 'Comment');
   if (like) {
     res.status(409).json({
       error: `Like between current user and the comment ${commentId} already exists.`
@@ -41,7 +41,7 @@ const isFreetLikeRepeat = async (req: Request, res: Response, next: NextFunction
 const isFreetLikeExist = async (req: Request, res: Response, next: NextFunction) => {
   const curUserId = (req.session.userId as string) ?? '';
   const {freetId} = req.params;
-  const like = await LikeCollection.findOne(curUserId, freetId, "Freet");
+  const like = await LikeCollection.findOne(curUserId, freetId, 'Freet');
   if (!like) {
     res.status(404).json({
       error: {
@@ -57,10 +57,10 @@ const isFreetLikeExist = async (req: Request, res: Response, next: NextFunction)
 /**
  * Checks if a Like between the current user and the commentId in req.params exists
  */
- const isCommentLikeExist = async (req: Request, res: Response, next: NextFunction) => {
+const isCommentLikeExist = async (req: Request, res: Response, next: NextFunction) => {
   const curUserId = (req.session.userId as string) ?? '';
   const {commentId} = req.params;
-  const like = await LikeCollection.findOne(curUserId, commentId, "Comment");
+  const like = await LikeCollection.findOne(curUserId, commentId, 'Comment');
   if (!like) {
     res.status(404).json({
       error: {

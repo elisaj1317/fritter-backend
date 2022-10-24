@@ -25,7 +25,7 @@ router.get(
   ],
   async (req: Request, res: Response) => {
     const curUserId = (req.session.userId as string) ?? '';
-    const likes = await LikeCollection.findAllLikesByIdAndDoc(curUserId, "Freet");
+    const likes = await LikeCollection.findAllLikesByIdAndDoc(curUserId, 'Freet');
     const likedPosts = likes.map(util.getPopulatedFreetFromLike);
     const response = likedPosts.map(freetUtil.constructFreetResponseFromPopulatedFreet);
     res.status(200).json(response);
@@ -81,7 +81,7 @@ router.delete(
   async (req: Request, res: Response) => {
     const curUserId = (req.session.userId as string) ?? '';
     const {freetId} = req.params;
-    await LikeCollection.deleteOne(curUserId, freetId, "Freet");
+    await LikeCollection.deleteOne(curUserId, freetId, 'Freet');
     res.status(200).json({
       message: 'Your like was removed successfully.'
     });
@@ -99,7 +99,7 @@ router.delete(
  * @throws {409} - If the user attempts to like a comment they've liked before
  * @throws {404} - If the `commentId` is not a recognized commentId of any comment
  */
- router.put(
+router.put(
   '/comment/:commentId?',
   [
     userValidator.isUserLoggedIn,
@@ -127,7 +127,7 @@ router.delete(
  * @throws {404} - If there does not exist a like between the current user and the commentId
  * or if the given comment does not exist
  */
- router.delete(
+router.delete(
   '/comment/:commentId?',
   [
     userValidator.isUserLoggedIn,
@@ -137,7 +137,7 @@ router.delete(
   async (req: Request, res: Response) => {
     const curUserId = (req.session.userId as string) ?? '';
     const {commentId} = req.params;
-    await LikeCollection.deleteOne(curUserId, commentId, "Comment");
+    await LikeCollection.deleteOne(curUserId, commentId, 'Comment');
     res.status(200).json({
       message: 'Your like was removed successfully.'
     });

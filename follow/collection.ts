@@ -46,7 +46,7 @@ class FollowCollection {
    * @param {string} toUsername - The username of the user who received the follow
    * @return {Promise<HydratedDocument<Follow>[]>} - An array of all the follows with given fromUsername and toUsername
    */
-   static async findAllByUsernames(fromUsername: string, toUsername: string): Promise<Array<HydratedDocument<Follow>>> {
+  static async findAllByUsernames(fromUsername: string, toUsername: string): Promise<Array<HydratedDocument<Follow>>> {
     const fromUser = await UserCollection.findOneByUsername(fromUsername);
     const toUser = await UserCollection.findOneByUsername(toUsername);
     return FollowModel.find({fromUser: fromUser._id, toUser: toUser._id}).populate(['fromUser', 'toUser']);
@@ -102,7 +102,7 @@ class FollowCollection {
    *
    * @param {string} userId - The id of user removing from follows
    */
-   static async deleteMany(userId: Types.ObjectId | string): Promise<void> {
+  static async deleteMany(userId: Types.ObjectId | string): Promise<void> {
     await FollowModel.deleteMany({toUser: userId});
     await FollowModel.deleteMany({fromUser: userId});
   }

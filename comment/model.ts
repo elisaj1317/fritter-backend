@@ -54,8 +54,8 @@ const CommentSchema = new Schema({
     required: true
   }
 }, {
-  toObject: { virtuals: true, versionKey: false },
-  toJSON: { virtuals: true, versionKey: false }
+  toObject: {virtuals: true, versionKey: false},
+  toJSON: {virtuals: true, versionKey: false}
 });
 
 CommentSchema.virtual('numLikes', {

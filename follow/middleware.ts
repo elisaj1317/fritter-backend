@@ -59,7 +59,7 @@ const isFollowOneself = async (req: Request, res: Response, next: NextFunction) 
 /**
  * Checks if followee and/or followed in req.query are existing users
  */
- const isValidFollowUsers = async (req: Request, res: Response, next: NextFunction) => {
+const isValidFollowUsers = async (req: Request, res: Response, next: NextFunction) => {
   if (req.query.followee === undefined && req.query.followed === undefined) {
     res.status(400).json({
       error: 'Neither followee nor followed were given.'
@@ -97,8 +97,6 @@ const isFollowOneself = async (req: Request, res: Response, next: NextFunction) 
 
   next();
 };
-
-
 
 export {
   isFollowExists,
