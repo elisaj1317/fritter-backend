@@ -166,7 +166,7 @@ const isUserBodyExists = async (req: Request, res: Response, next: NextFunction)
 
   res.status(404).json({
     error: {
-      username: 'There is no account with this username'
+      username: `There is no account with the username ${req.body.username as string}`
     }
   });
 };
@@ -184,7 +184,7 @@ const isUserParamsExists = async (req: Request, res: Response, next: NextFunctio
 
   res.status(404).json({
     error: {
-      username: 'There is no account with this username'
+      username: `There is no account with the username ${req.params.username as string}`
     }
   });
 };
@@ -202,7 +202,7 @@ const isUserQueryExists = async (req: Request, res: Response, next: NextFunction
 
   res.status(404).json({
     error: {
-      username: 'There is no account with this username'
+      username: `There is no account with the username ${req.query.username as string}`
     }
   });
 };

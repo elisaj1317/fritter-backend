@@ -2,54 +2,34 @@ import type {HydratedDocument} from 'mongoose';
 import type {Follow, PopulatedFollow} from './model';
 
 // Contains all the information needed from user for follows
-type FollowUserResponse = {
+type FollowResponse = {
   _id: string;
-  username: string;
+  followee: string;
+  followed: string;
 };
 
 /**
- * Transform a raw Follow object from the database into a user response
- * of who was followed (`toUser`). The user response only contains information
- * needed for follows.
+ * Transform a raw Follow object from the database into a follow response containing only the usernames
+ * of the followee and followed users
  *
  * @param {HydratedDocument<Follow>} follow - A follow
- * @returns {FollowUserResponse} - The user object formatted for the follow frontend
+ * @returns {FollowResponse} - The follow object formatted for the frontend
  */
-const constructFollowingUserResponse = (follow: HydratedDocument<Follow>): FollowUserResponse => {
+const constructFollowResponse = (follow: HydratedDocument<Follow>): FollowResponse => {
   const followCopy: PopulatedFollow = {
     ...follow.toObject({
       versionKey: false // Cosmetics; prevents returning of __v property
     })
   };
   const {toUser} = followCopy;
-  return {
-    _id: toUser._id.toString(),
-    username: toUser.username
-  };
-};
-
-/**
- * Transform a raw Follow object from the database into a user response
- * of followers (`fromUser`). The user response only contains information
- * needed for follows.
- *
- * @param {HydratedDocument<Follow>} follow - A follow
- * @returns {FollowUserResponse} - The user object formatted for the follow frontend
- */
-const constructFollowerUserResponse = (follow: HydratedDocument<Follow>): FollowUserResponse => {
-  const followCopy: PopulatedFollow = {
-    ...follow.toObject({
-      versionKey: false // Cosmetics; prevents returning of __v property
-    })
-  };
   const {fromUser} = followCopy;
   return {
-    _id: fromUser._id.toString(),
-    username: fromUser.username
+    _id: followCopy._id.toString(),
+    followee: fromUser.username,
+    followed: toUser.username
   };
 };
 
 export {
-  constructFollowingUserResponse,
-  constructFollowerUserResponse
+  constructFollowResponse,
 };

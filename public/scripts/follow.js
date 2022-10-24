@@ -5,13 +5,13 @@
  */
 
 function viewFollowings(fields) {
-    fetch(`/api/follows/following?username=${fields.username}`)
+    fetch(`/api/follows?followee=${fields.username}`)
     .then(showResponse)
     .catch(showResponse);
 }
 
 function viewFollowers(fields) {
-    fetch(`/api/follows/follower?username=${fields.username}`)
+    fetch(`/api/follows?followed=${fields.username}`)
     .then(showResponse)
     .catch(showResponse);
 }
@@ -23,7 +23,7 @@ function viewFollowerFeed(fields) {
 }
 
 function createFollow(fields) {
-fetch('/api/follows', {method: 'POST', body: JSON.stringify(fields), headers: {'Content-Type': 'application/json'}})
+fetch(`/api/follows/${fields.username}`, {method: 'PUT'})
     .then(showResponse)
     .catch(showResponse);
 }

@@ -40,6 +40,19 @@ class FollowCollection {
   }
 
   /**
+   * Find a follow given two usernames
+   *
+   * @param {string} fromUsername - The username of user who performed the follow
+   * @param {string} toUsername - The username of the user who received the follow
+   * @return {Promise<HydratedDocument<Follow>[]>} - An array of all the follows with given fromUsername and toUsername
+   */
+   static async findAllByUsernames(fromUsername: string, toUsername: string): Promise<Array<HydratedDocument<Follow>>> {
+    const fromUser = await UserCollection.findOneByUsername(fromUsername);
+    const toUser = await UserCollection.findOneByUsername(toUsername);
+    return FollowModel.find({fromUser: fromUser._id, toUser: toUser._id}).populate(['fromUser', 'toUser']);
+  }
+
+  /**
    * Find all followings of a given user
    *
    * @param {string} username - The username of the user who follows other users
