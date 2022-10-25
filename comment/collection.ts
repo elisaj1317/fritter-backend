@@ -88,6 +88,7 @@ class CommentCollection {
       comment.category = commentDetails.category as number;
     }
 
+    comment.dateModified = new Date();
     await comment.save();
     return comment;
   }
