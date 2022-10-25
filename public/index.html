@@ -5,6 +5,7 @@
   <meta name="author" content="6.170 Staff">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="/stylesheets/style.css">
+  <script src="/scripts/menu.js"></script>
   <script src="/scripts/comment.js"></script>
   <script src="/scripts/like.js"></script>
   <script src="/scripts/follow.js"></script>
@@ -275,6 +276,37 @@
             <input id="commentId" name="commentId">
           </div>
           <input type="submit" value="Delete Comment">
+        </form>
+
+        <form id="view-menu">
+          <h3>View Current User's Menu</h3>
+          <input type="submit" value="View Menu">
+        </form>
+
+        <form id="add-one-menu">
+          <h3>Add One Menu Item to End</h3>
+          <div>
+            <label for="name">Name:</label>
+            <input id="name" name="name">
+          </div>
+          <div>
+            <label for="url">Url:</label>
+            <input id="url" name="url">
+          </div>
+          <input type="submit" value="Add Item">
+        </form>
+
+        <form id="edit-menu-locations">
+          <h3>Edit Menu Item Location: (a location greater than number of menu items is last menu item position)</h3>
+          <div>
+            <label for="previousLocation">Previous Location:</label>
+            <input id="previousLocation" name="previousLocation">
+          </div>
+          <div>
+            <label for="newLocation">New Location:</label>
+            <input id="newLocation" name="newLocation">
+          </div>
+          <input type="submit" value="Change Item Location">
         </form>
 
       </div>

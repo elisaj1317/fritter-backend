@@ -54,7 +54,10 @@ const formsAndHandlers = {
   'create-comment': createComment,
   'edit-comment-contents': editComment,
   'edit-comment-category': editComment,
-  'delete-comment': deleteComment
+  'delete-comment': deleteComment,
+  'view-menu': viewMenu,
+  'add-one-menu': addOneToMenu,
+  'edit-menu-locations': changeMenuLocation
 };
 
 // Attach handlers to forms
