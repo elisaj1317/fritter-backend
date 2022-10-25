@@ -26,8 +26,8 @@ class MenuCollection {
             await newMenu.save();
             return newMenu.populate('ownerId');
         }
-
         menu.entries.push({name, url});
+        menu.dateModified = new Date();
         await menu.save();
         return menu.populate('ownerId');
     }
@@ -42,7 +42,6 @@ class MenuCollection {
      */
      static async updateOneByLocation(ownerId: Types.ObjectId | string, prevLoc: number, newLoc: number): Promise<HydratedDocument<Menu>> {
         const menu = await MenuModel.findOne({ownerId});
-
         let item: {name: string, url: string};
         if (prevLoc < menu.entries.length) {
             item = menu.entries[prevLoc];
@@ -52,9 +51,9 @@ class MenuCollection {
             menu.entries.splice(menu.entries.length - 1, 1);
         }
 
-        if (newLoc < menu.entries.length) {
+        if (newLoc < menu.entries.length && newLoc >= 0) {
             menu.entries.splice(newLoc, 0, item);
-        } else {
+        } else if (newLoc !== -1) {
             menu.entries.push(item);
         }
         
@@ -70,8 +69,7 @@ class MenuCollection {
      * @return {Promise<HydratedDocument<Menu>>} - The menu associated with the user
      */
     static async findOneByUserId(ownerId: Types.ObjectId | string): Promise<HydratedDocument<Menu>> {
-        const menu = MenuModel.findOne({ownerId});
-
+        const menu = await MenuModel.findOne({ownerId});
         if (!menu) {
             const newMenu = new MenuModel({
                 ownerId,

@@ -86,12 +86,12 @@ class LikeCollection {
   }
 
   /**
-   * Delete all the likes of a given freet
+   * Delete all the likes of a given object
    *
-   * @param {string} freetId - The id of freet liked on
+   * @param {string} objectId - The id of object liked on
    */
-  static async deleteManyByFreetId(freetId: Types.ObjectId | string): Promise<void> {
-    await LikeModel.deleteMany({likedObject: freetId});
+  static async deleteManyByObjectId(objectId: Types.ObjectId | string, docModel: objectsToLike): Promise<void> {
+    await LikeModel.deleteMany({likedObject: objectId, docModel});
   }
 }
 

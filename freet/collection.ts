@@ -2,6 +2,8 @@ import type {HydratedDocument, Types} from 'mongoose';
 import type {Freet} from './model';
 import FreetModel from './model';
 import UserCollection from '../user/collection';
+import LikeCollection from '../like/collection';
+import CommentCollection from '../comment/collection';
 
 /**
  * This files contains a class that has the functionality to explore freets
@@ -99,12 +101,23 @@ class FreetCollection {
   }
 
   /**
-   * Delete all the freets by the given author
+   * Delete all the freets by the given author,
+   * delete all likes and comments on those freets
    *
    * @param {string} authorId - The id of author of freets
    */
   static async deleteMany(authorId: Types.ObjectId | string): Promise<void> {
+    const freets = await FreetModel.find({authorId});
+    const promises = [];
+
+    for (const freet of freets) {
+      promises.push(LikeCollection.deleteManyByObjectId(freet._id, 'Freet'));
+      promises.push(CommentCollection.deleteManyByFreetId(freet._id));
+    }
+
+    await Promise.all(promises);
     await FreetModel.deleteMany({authorId});
+    
   }
 }
 

@@ -34,6 +34,7 @@ const MenuSchema = new Schema({
                 required: true
             }
         }],
+        _id: false,
         required: true,
         default: []
     },

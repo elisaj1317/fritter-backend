@@ -1,5 +1,6 @@
 import type {Request, Response, NextFunction} from 'express';
 import {Types} from 'mongoose';
+import MenuCollection from './collection';
 
 
 const isUrlHelper = (url:string): boolean => {
@@ -76,9 +77,27 @@ const isValidLocations = async (req: Request, res: Response, next: NextFunction)
             return;
         }
 
-        if (!Number.isInteger(newLocation) || newLocation < 0) {
+        if (!Number.isInteger(newLocation) || newLocation < -1) {
             res.status(400).json({
-                error: `Provided newLocation must be an integer >= 0. The location ${req.body.newLocation as string} is not valid.`
+                error: `Provided newLocation must be an integer >= 0 or -1 to delete the item. The location ${req.body.newLocation as string} is not valid.`
+            });
+            return;
+        }
+    }
+
+    next();
+}
+
+/**
+ * Checks if entries is not empty
+ */
+const existEntryItems = async (req: Request, res: Response, next: NextFunction) => {
+    if (!req.body.name || !req.body.url) {
+        const menu = await MenuCollection.findOneByUserId(req.session.userId as string ?? '');
+        
+        if (menu.entries.length <= 0) {
+            res.status(400).json({
+                error: "Entries must have items in order to move them."
             });
             return;
         }
@@ -91,5 +110,6 @@ export {
     isValidMenuBody,
     isValidUrl,
     isValidName,
-    isValidLocations
+    isValidLocations, 
+    existEntryItems
 }

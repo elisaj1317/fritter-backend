@@ -8,7 +8,7 @@ import * as util from './util';
 const router = express.Router();
 
 /**
- * Get current user's menu
+ * Get custom menu bar for authenticated user
  * 
  * @name GET /api/menus
  * 
@@ -29,7 +29,8 @@ router.get(
 );
 
 /**
- * Add an item to current user's menu bar
+ * Add an item to current user's menu bar, creates menu bar
+ * if it doesn't exist
  * 
  * @name PUT /api/menus
  * 
@@ -40,7 +41,8 @@ router.get(
  * @throws {400} - If missing one or both of name or url or is not valid
  */
 /**
- * Rearrange items in current user's menu bar
+ * Rearrange items in current user's menu bar, removes item if newLocation is negative,
+ * creates menu bar if it doesn't exist
  * 
  * @name PUT /api/menus
  * 
@@ -50,22 +52,25 @@ router.get(
  * last item if location is greater than number of menu items
  * @return {MenuResponse} - The updated menu item
  * @throws {403} - If the user is not logged in
- * @throws {400} - If invalid locations
+ * @throws {400} - If invalid locations or menu bar empty
  */
 router.put(
     '/',
     [
         userValidator.isUserLoggedIn,
         menuValidator.isValidMenuBody,
-        menuValidator.isValidLocations
+        menuValidator.isValidLocations,
+        menuValidator.existEntryItems
     ],
     async(req: Request, res: Response, next: NextFunction) => {
         if (req.body.name !== undefined && req.body.url !== undefined) {
-            const curUserId = (req.session.userId as string) ?? '';
-            const menu = await MenuCollection.updateOneByLocation(curUserId, Number(req.body.previousLocation), Number(req.body.newLocation));
-            const response = util.constructMenuResponse(menu);
-            res.status(200).json(response);
+            next();
+            return;
         }
+        const curUserId = (req.session.userId as string) ?? '';
+        const menu = await MenuCollection.updateOneByLocation(curUserId, Number(req.body.previousLocation), Number(req.body.newLocation));
+        const response = util.constructMenuResponse(menu);
+        res.status(200).json(response);
     },
     [
         menuValidator.isValidName,

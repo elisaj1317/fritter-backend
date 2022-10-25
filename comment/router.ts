@@ -1,5 +1,6 @@
 import type {NextFunction, Request, Response} from 'express';
 import express from 'express';
+import LikeCollection from '../like/collection';
 import CommentCollection from './collection';
 import * as commentValidator from './middleware';
 import * as userValidator from '../user/middleware';
@@ -107,6 +108,7 @@ router.delete(
   ],
   async (req: Request, res: Response) => {
     await CommentCollection.deleteOne(req.params.commentId);
+    await LikeCollection.deleteManyByObjectId(req.params.commentId, 'Comment');
     res.status(200).json({
       message: 'Your comment was deleted successfully.'
     });

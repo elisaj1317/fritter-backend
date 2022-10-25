@@ -487,53 +487,40 @@ This renders the `index.html` file that will be used to interact with the backen
 
 **Returns**
 
-- An array of menu items for the authenticated user
+- The menu bar for the authenticated user
 
 **Throws**
 
 - `403` if the user is not logged in
 
-#### `POST /api/menus` - Add item to menu bar
+#### `PUT /api/menus` - Add item to current user's menu bar, creates menu bar if it doesn't exist
 
 **Body**
 
-- `pageUrl` _{string}_ - The url for the page added to the menu bar
+- `name` _{string}_ - The name for the page added to the menu bar
+- `url` _{string}_ - The url for the page added to the menu bar
 
 **Returns**
 
-- A success message
-- A object with the created menu item
+- A object with the updated menu bar
 
 **Throws**
 
 - `403` if the user is not logged in
+- `400` if name or url is not valid or is not given
 
-#### `DELETE /api/menus/:menuId?` - Delete an existing menu item
-
-**Returns**
-
-- A success message
-
-**Throws**
-
-- `403` if the user is not logged in
-- `403` if the user is not the owner of the menu item
-- `404` if the `menuId` is invalid
-
-#### `PUT /api/menus/:menuId?` - Update an existing menu item's location
+#### `PUT /api/menus` - Rearrange or remove items in current user's menu bar, creates menu bar if it doesn't exist
 
 **Body**
 
-- `location` _{integer}_ - The new location for the menu item
+- `previousLocation` _{integer}_ - The location of item to move (zero-indexed)
+- `newLocation` _{integer}_ - The location to move item (zero-indexed), removes item if `newLocation` is -1
 
 **Returns**
 
-- A success message
-- An updated array of menu items for the authenticated user
+- A object with the updated menu bar
 
 **Throws**
 
 - `403` if the user is not logged in
-- `404` if the `menuId` is invalid
-- `403` if the user is not the owner of the menu item
-- `400` if the `location` is invalid
+- `400` if invalid locations or menu bar empty

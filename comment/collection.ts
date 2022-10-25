@@ -1,6 +1,7 @@
 import type {HydratedDocument, Types} from 'mongoose';
 import type {Comment} from './model';
 import CommentModel from './model';
+import LikeCollection from '../like/collection';
 
 /**
  * This files contains a class that has the functionality to explore comments
@@ -110,6 +111,14 @@ class CommentCollection {
    * @param {string} authorId - The id of author of comments
    */
   static async deleteManyByAuthor(authorId: Types.ObjectId | string): Promise<void> {
+    const comments = await CommentModel.find({authorId});
+    const promises = [];
+
+    for (const comment of comments) {
+      promises.push(LikeCollection.deleteManyByObjectId(comment._id, 'Comment'));
+    }
+
+    await Promise.all(promises);
     await CommentModel.deleteMany({authorId});
   }
 
@@ -119,7 +128,15 @@ class CommentCollection {
    * @param {string} freetId - The id of freet commented on
    */
   static async deleteManyByFreetId(freetId: Types.ObjectId | string): Promise<void> {
-    await CommentModel.deleteMany({freetId});
+    const comments = await CommentModel.find({commentOn: freetId});
+    const promises = [];
+
+    for (const comment of comments) {
+      promises.push(LikeCollection.deleteManyByObjectId(comment._id, 'Comment'));
+    }
+
+    await Promise.all(promises);
+    await CommentModel.deleteMany({commentOn: freetId});
   }
 }
 
